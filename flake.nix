@@ -7,8 +7,8 @@
     nixosConfigurations.tarvos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
-        ./hosts/tarvos.nix
+        ./profiles
+        ./hosts/tarvos
         nixpkgs.nixosModules.notDetected
         nixos-hardware.nixosModules.lenovo-thinkpad-t490
       ];
