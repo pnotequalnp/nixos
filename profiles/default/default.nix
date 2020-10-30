@@ -45,6 +45,7 @@
     upower.enable = true;
     blueman.enable = true;
     dbus.packages = [ pkgs.gnome3.dconf ];
+    openssh.enable = true;
   };
 
   environment.pathsToLink = [ "/share/zsh" ];
@@ -75,7 +76,6 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
