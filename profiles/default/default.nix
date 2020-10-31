@@ -45,7 +45,10 @@
     upower.enable = true;
     blueman.enable = true;
     dbus.packages = [ pkgs.gnome3.dconf ];
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      passwordAuthentication = false;
+    };
   };
 
   environment.pathsToLink = [ "/share/zsh" ];
