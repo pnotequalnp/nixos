@@ -1,7 +1,7 @@
 {
   enable = true;
   blur = true;
-  fade = true;
+  fade = false;
   fadeDelta = 6;
   opacityRule = [
     "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
