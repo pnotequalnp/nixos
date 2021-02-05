@@ -2,13 +2,13 @@
 
 {
   options.profiles.emacs = {
-    enable = lib.mkEnableOption "Emacs";
+    enable = lib.mkEnableOption "Doom Emacs";
   };
 
   config = lib.mkIf config.profiles.emacs.enable {
-    programs.emacs = {
+    programs.doom-emacs = {
       enable = true;
-      extraPackages = p: with p; [ emacsql-sqlite3 vterm ];
+      doomPrivateDir = ./doom;
     };
 
     services.emacs = {

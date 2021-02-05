@@ -14,10 +14,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-doom-emacs = {
+      url = "github:vlaci/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     chrome-dark.url = "github:pnotequalnp/chrome-dark";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, chrome-dark }: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, nix-doom-emacs, chrome-dark }: {
     homeConfigurations = {
       tarvos = home-manager.lib.homeManagerConfiguration {
         system = "x86_64-linux";
@@ -25,7 +30,10 @@
         username = "kevin";
         configuration = { pkgs, ... }: {
           nixpkgs.overlays = [ chrome-dark.overlay ];
-          imports = [ ./home/hosts/tarvos.nix ];
+          imports = [
+            nix-doom-emacs.hmModule
+            ./home/hosts/tarvos.nix
+          ];
         };
       };
     };
