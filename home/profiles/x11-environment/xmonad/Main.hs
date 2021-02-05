@@ -1,9 +1,13 @@
-{-# OPTIONS_GHC -Wall #-}
+{-# OPTIONS_GHC -Wall                     #-}
 {-# OPTIONS_GHC -fno-show-valid-hole-fits #-}
-{-# LANGUAGE OverloadedLists #-}
-{-# LANGUAGE ParallelListComp #-}
-{-# LANGUAGE TupleSections #-}
-{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE OverloadedLists     #-}
+{-# LANGUAGE ParallelListComp    #-}
+{-# LANGUAGE TupleSections       #-}
+{-# LANGUAGE TypeApplications    #-}
+
+-- TODO: replace xmobar
+-- TODO: fullscreen windows render over status bar
 
 module Main where
 
@@ -12,31 +16,41 @@ import Data.Foldable (fold)
 import Data.List (intercalate)
 import Data.Monoid (Ap(..))
 import Data.Map (Map)
-import qualified Data.Map as M
+import Data.Map qualified as M
 import System.Process (readProcess)
 import XMonad.Actions.Submap (submap)
 import XMonad
   ( KeySym, X, Layout, Full, Mirror, Tall, Choose, XConfig, ButtonMask
   , (=?), (.|.), spawn , def, mod4Mask, xmonad, liftIO
   )
-import qualified XMonad as X
+import XMonad qualified as X
 import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.EwmhDesktops (ewmh)
-import qualified XMonad.StackSet as SS
+import XMonad.Layout.LayoutModifier (ModifiedLayout)
+import XMonad.Layout.NoBorders (SmartBorder, smartBorders)
+import XMonad.StackSet qualified as SS
 import XMonad.Hooks.ManageHelpers (composeOne, (-?>), transience, isFullscreen, doFullFloat)
+
+type LayoutConfig = ModifiedLayout SmartBorder (Choose Tall (Choose (Mirror Tall) Full))
 
 main :: IO ()
 main = xmobar config >>= xmonad
 
-config :: XConfig (Choose Tall (Choose (Mirror Tall) Full))
+config :: XConfig LayoutConfig
 config = ewmh def
-  { X.terminal = "alacritty"
-  , X.modMask  = mod4Mask
-  , X.keys     = keys
-  , X.mouseBindings = const []
-  , X.workspaces = workspaces
-  , X.manageHook = manageHook
+  { X.terminal           = "alacritty"
+  , X.modMask            = mod4Mask
+  , X.keys               = keys
+  , X.layoutHook         = layoutHook
+  , X.mouseBindings      = const []
+  , X.workspaces         = workspaces
+  , X.manageHook         = manageHook
+  , X.normalBorderColor  = "#222222"
+  , X.focusedBorderColor = "#777777"
   }
+
+layoutHook :: LayoutConfig X.Window
+layoutHook = smartBorders $ X.layoutHook def
 
 manageHook :: X.ManageHook
 manageHook = fold @[] [spawnHook, X.manageHook def]
@@ -121,7 +135,7 @@ systemKeys =
 
 rofi :: String -> Map String (X ()) -> X ()
 rofi name options = do
-  -- TODO: This doesn't work (spawned rofi isn't interactive)
+  -- FIXME: This doesn't work (spawned rofi isn't interactive)
   res <- liftIO $ readProcess "rofi" ["-dmenu", "-i", "-p", name] input
   let act = M.lookup res options
   ala Ap foldMap act
