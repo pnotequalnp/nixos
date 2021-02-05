@@ -48,5 +48,15 @@
         ];
       };
     };
+
+    devShell.x86_64-linux =
+      let
+        pkgs = nixpkgs.legacyPackages.x86_64-linux.pkgs;
+        hsPkgs = import ./home/profiles/x11-environment/xmonad/packages.nix;
+      in pkgs.mkShell {
+        buildInputs = with pkgs; with hs; [
+          (pkgs.haskellPackages.ghcWithHoogle hsPkgs)
+        ];
+      };
   };
 }

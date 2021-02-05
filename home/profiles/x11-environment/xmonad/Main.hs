@@ -22,7 +22,6 @@ import XMonad
 import qualified XMonad as X
 import XMonad.Hooks.DynamicLog (xmobar)
 import XMonad.Hooks.EwmhDesktops (ewmh)
-import XMonad.Hooks.SetWMName (setWMName)
 import qualified XMonad.StackSet as SS
 import XMonad.Hooks.ManageHelpers (composeOne, (-?>), transience, isFullscreen, doFullFloat)
 
