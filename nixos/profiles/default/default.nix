@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./networking.nix ];
+
   users = import ./users.nix { inherit pkgs; };
 
   boot.loader = {
@@ -31,6 +33,8 @@
       experimental-features = nix-command flakes ca-references
     '';
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   services = {
     upower.enable = true;

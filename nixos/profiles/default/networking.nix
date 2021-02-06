@@ -6,12 +6,14 @@
     useDHCP = false;
   };
 
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = false;
-  };
+  services = {
+    openssh = {
+      enable = true;
+      passwordAuthentication = false;
+    };
 
-  zerotierone = {
-    enable = true;
+    zerotierone = {
+      enable = true;
+    };
   };
 }
