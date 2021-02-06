@@ -27,6 +27,11 @@
     services.unclutter = import ./unclutter.nix;
     programs.rofi      = import ./rofi.nix;
 
+    services.taffybar = {
+      enable = true;
+      package = pkgs.haskellPackages.callCabal2nix "taffybar-pnotequalnp" ./taffybar {};
+    };
+
     home.packages = with pkgs; [ haskellPackages.xmobar flameshot xclip dunst ];
 
     gtk = {
