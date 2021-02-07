@@ -3,7 +3,7 @@
 {
   options.profiles.x11-environment = {
     enable = lib.mkEnableOption
-      "xmonad, xmobar, picom, dunst, rofi, and unclutter, etc.";
+      "xmonad, polybar, picom, dunst, rofi, unclutter, etc.";
   };
 
   config = lib.mkIf config.profiles.x11-environment.enable {
@@ -20,14 +20,14 @@
       xmodmap          = lib.readFile ./xmodmap;
     };
 
-    xdg.configFile."xmobar/xmobarrc".source = ./xmobarrc;
-
     services.picom     = import ./picom.nix;
     services.dunst     = import ./dunst.nix;
     services.unclutter = import ./unclutter.nix;
     programs.rofi      = import ./rofi.nix;
 
-    home.packages = with pkgs; [ haskellPackages.xmobar flameshot xclip dunst ];
+    services.polybar = import ./polybar.nix { inherit pkgs; };
+
+    home.packages = with pkgs; [ flameshot xclip dunst ];
 
     gtk = {
       enable = true;

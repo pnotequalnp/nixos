@@ -6,8 +6,8 @@
 {-# LANGUAGE TupleSections       #-}
 {-# LANGUAGE TypeApplications    #-}
 
--- TODO: replace xmobar
 -- TODO: fullscreen windows render over status bar
+-- TODO: tabs
 
 module Main where
 
@@ -20,24 +20,28 @@ import Data.Map qualified as M
 import System.Process (readProcess)
 import XMonad.Actions.Submap (submap)
 import XMonad
-  ( KeySym, X, Layout, Full, Mirror, Tall, Choose, XConfig, ButtonMask
+  ((-->),  KeySym, X, Layout, Full, Mirror, Tall, Choose, XConfig, ButtonMask
   , (=?), (.|.), spawn , def, mod4Mask, xmonad, liftIO
   )
 import XMonad qualified as X
-import XMonad.Hooks.DynamicLog (xmobar)
+import XMonad.Hooks.ManageDocks (AvoidStruts, avoidStruts, docks)
 import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Layout.LayoutModifier (ModifiedLayout)
 import XMonad.Layout.NoBorders (SmartBorder, smartBorders)
 import XMonad.StackSet qualified as SS
 import XMonad.Hooks.ManageHelpers (composeOne, (-?>), transience, isFullscreen, doFullFloat)
 
-type LayoutConfig = ModifiedLayout SmartBorder (Choose Tall (Choose (Mirror Tall) Full))
+type LayoutConfig =
+    ModifiedLayout SmartBorder
+  ( ModifiedLayout AvoidStruts
+    (Choose Tall (Choose (Mirror Tall) Full))
+  )
 
 main :: IO ()
-main = xmobar config >>= xmonad
+main = xmonad config
 
 config :: XConfig LayoutConfig
-config = ewmh def
+config = ewmh . docks $ def
   { X.terminal           = "alacritty"
   , X.modMask            = mod4Mask
   , X.keys               = keys
@@ -50,17 +54,16 @@ config = ewmh def
   }
 
 layoutHook :: LayoutConfig X.Window
-layoutHook = smartBorders $ X.layoutHook def
+layoutHook = smartBorders . avoidStruts $ X.layoutHook def
 
 manageHook :: X.ManageHook
-manageHook = fold @[] [spawnHook, X.manageHook def]
+manageHook = fold @[]
+  [ fullScreen
+  , X.className =? "discord" --> X.doShift "18"
+  , X.className =? "zoom" --> X.doShift "17"
+  ]
   where
-  spawnHook = composeOne
-    [ isFullscreen -?> doFullFloat
-    , transience
-    , X.className =? "discord" -?> X.doShift "18"
-    , X.className =? "zoom" -?> X.doShift "17"
-    ]
+  fullScreen = composeOne [ transience, isFullscreen -?> doFullFloat ]
 
 workspaces :: [String]
 workspaces = [0..19] <&> show @Int
