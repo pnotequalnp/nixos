@@ -23,8 +23,8 @@ let
     foreground-alt = "#777";
     foreground-dim = "#555";
     primary = "#ffb52a";
-    secondary = "#e60053";
-    alert = "#bd2c40";
+    warning = "#ff6700";
+    alert = "#e60053";
   };
 in {
   enable = true;
@@ -45,16 +45,17 @@ in {
       type = "internal/battery";
       battery = "BAT0";
       adapter = "AC";
-      full-at = 98;
+      full-at = 97;
+      time-format = "%H:%M";
       label-full = "ﮤ %percentage%%";
-      label-charging = "  %percentage%%";
-      format-discharging = "<ramp-capacity>  <label-discharging>";
-      label-discharging = "%percentage%%";
-      ramp-capacity-0 = "";
-      ramp-capacity-1 = "";
-      ramp-capacity-2 = "";
-      ramp-capacity-3 = "";
-      ramp-capacity-4 = "";
+      label-charging = "  %percentage%% @%consumption% (%time%)";
+      format-discharging = "<ramp-capacity> <label-discharging>";
+      label-discharging = "%percentage%% @%consumption% (%time%)";
+      ramp-capacity-0 = "%{F${colors.alert}}%{F-} ";
+      ramp-capacity-1 = "%{F${colors.warning}}%{F-} ";
+      ramp-capacity-2 = " ";
+      ramp-capacity-3 = " ";
+      ramp-capacity-4 = " ";
     };
 
     "module/bluetooth" = {
@@ -75,8 +76,8 @@ in {
       ramp-coreload-3 = "▄";
       ramp-coreload-4 = "▅";
       ramp-coreload-5 = "▆";
-      ramp-coreload-6 = "▇";
-      ramp-coreload-7 = "█";
+      ramp-coreload-6 = "%{F${colors.warning}}▇%{F-}";
+      ramp-coreload-7 = "%{F${colors.alert}}█%{F-}";
     };
 
     "module/date" = {
@@ -110,8 +111,8 @@ in {
       mount-0 = "/";
       format-mounted = "<label-mounted> <ramp-capacity>";
       label-mounted = "%percentage_used%%";
-      ramp-capacity-0 = "█";
-      ramp-capacity-1 = "▇";
+      ramp-capacity-0 = "%{F${colors.alert}}█%{F-}";
+      ramp-capacity-1 = "%{F${colors.warning}}▇%{F-}";
       ramp-capacity-2 = "▆";
       ramp-capacity-3 = "▅";
       ramp-capacity-4 = "▄";
@@ -131,8 +132,8 @@ in {
       ramp-used-3 = "▄";
       ramp-used-4 = "▅";
       ramp-used-5 = "▆";
-      ramp-used-6 = "▇";
-      ramp-used-7 = "█";
+      ramp-used-6 = "%{F${colors.warning}}▇%{F-}";
+      ramp-used-7 = "%{F${colors.alert}}█%{F-}";
     };
 
     "module/temperature" = {
@@ -146,7 +147,7 @@ in {
       format-warn = "<label-warn>";
       label = "%temperature-c%";
       label-warn = "%temperature-c%";
-      label-warn-foreground = colors.secondary;
+      label-warn-foreground = colors.alert;
     };
 
     "module/wlan" = {
