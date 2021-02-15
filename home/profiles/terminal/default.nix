@@ -29,10 +29,12 @@
     home.packages = with pkgs; [
       bitwarden-cli
       brightnessctl
+      dnsutils
       fd
       gitAndTools.gh
       gitAndTools.git-ignore
       jq
+      kakoune
       manix
       nix-index
       nix-tree

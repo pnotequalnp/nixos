@@ -36,6 +36,19 @@
           ];
         };
       };
+
+      minimal = home-manager.lib.homeManagerConfiguration {
+        system = "x86_64-linux";
+        homeDirectory = /home/kevin;
+        username = "kevin";
+        configuration = { pkgs, ... }: {
+          nixpkgs.overlays = [ chrome-dark.overlay ];
+          imports = [
+            nix-doom-emacs.hmModule
+            ./home/hosts/minimal.nix
+          ];
+        };
+      };
     };
 
     nixosConfigurations = {
