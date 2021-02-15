@@ -35,7 +35,7 @@
       gitAndTools.git-ignore
       jq
       kakoune
-      manix
+      # manix
       nix-index
       nix-tree
       pandoc
