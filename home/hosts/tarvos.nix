@@ -19,6 +19,7 @@
 
     development = {
       base.enable    = true;
+      c.enable       = true;
       haskell.enable = true;
       java.enable    = true;
       latex.enable   = true;
