@@ -4,3 +4,4 @@ stty start undef
 setopt EXTENDED_GLOB CSH_NULL_GLOB
 setopt AUTO_PUSHD PUSHD_IGNORE_DUPS
 unsetopt BEEP
+KEYTIMEOUT=5
