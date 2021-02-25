@@ -9,7 +9,8 @@
     home.packages = with pkgs; [
       clang_11
       clang-tools
-      gcc
+      cmake
+      cmake-language-server
     ];
   };
 }
