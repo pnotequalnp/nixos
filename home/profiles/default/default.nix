@@ -3,28 +3,41 @@
 {
   imports = [ ./fonts.nix ];
 
-  programs.zsh = import ./zsh { inherit config lib pkgs; };
+  programs = {
+    gpg.enable = true;
 
-  programs.ssh = {
-    enable = true;
-    extraConfig = "AddKeysToAgent yes";
+    ssh = {
+      enable = true;
+      extraConfig = ''
+        AddKeysToAgent yes
+      '';
+    };
+
+    starship = import ./starship.nix;
+
+    zsh = import ./zsh { inherit config lib pkgs; };
   };
 
-  programs.gpg.enable = true;
+  services = {
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+    };
 
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
+    udiskie = {
+      enable = true;
+      tray = "never";
+    };
   };
 
   xdg = {
     enable = true;
     userDirs = {
       enable = true;
-      desktop = "\$HOME/";
-      documents = "\$HOME/documents";
-      download = "\$HOME/downloads";
-      pictures = "\$HOME/pictures";
+      desktop = "$HOME/";
+      documents = "$HOME/documents";
+      download = "$HOME/downloads";
+      pictures = "$HOME/pictures";
     };
   };
 }

@@ -3,16 +3,15 @@
 {
   options.profiles.development.base = {
     enable = lib.mkEnableOption "Basic development tooling";
+    gui = lib.mkEnableOption "Basic GUI development tooling";
   };
 
   config = lib.mkIf config.profiles.development.base.enable {
-    programs.vscode = import ./vscodium.nix { inherit config lib pkgs; };
+    home.packages = with pkgs; [ binutils docker-compose scc ];
 
-    home.packages = with pkgs; [
-      binutils
-      docker-compose
-      insomnia
-      scc
-    ];
+    inherit (lib.mkIf config.profiles.development.base.gui {
+      home.packages = with pkgs; [ insomnia ];
+    })
+    ;
   };
 }

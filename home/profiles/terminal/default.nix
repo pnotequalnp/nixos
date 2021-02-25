@@ -10,10 +10,10 @@
     programs.exa.enable = true;
     programs.fzf.enable = true;
 
-    programs.git    = import ./git.nix;
-    programs.htop   = import ./htop.nix;
+    programs.git = import ./git.nix;
+    programs.htop = import ./htop.nix;
     # programs.neovim = import ./neovim { inherit lib pkgs; };
-    programs.tmux   = import ./tmux.nix { inherit lib pkgs; };
+    programs.tmux = import ./tmux.nix { inherit lib pkgs; };
 
     programs.direnv = {
       enable = true;
@@ -38,16 +38,16 @@
       # manix
       nix-index
       nix-tree
+      nixfmt
       pandoc
       ranger
       ripgrep
+      udiskie
       unzip
       vim
       zip
     ];
 
-    home.sessionVariables = {
-      EDITOR = "vim";
-    };
+    home.sessionVariables = { EDITOR = "vim"; };
   };
 }
