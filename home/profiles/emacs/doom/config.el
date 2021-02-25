@@ -55,5 +55,11 @@
 
 (after! rainbow-delimiters (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-(add-hook 'haskell-mode-hook #'format-all-mode)
-(setq +format-on-save-enabled-modes (list 'haskell-mode))
+(setq +format-on-save-enabled-modes (list 'haskell-mode 'c++-mode 'nix-mode))
+
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))

@@ -55,7 +55,7 @@
        (evil +everywhere)
        (file-templates)
        (fold)
-       (format)
+       (format +onsave)
        (snippets)
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
@@ -84,32 +84,34 @@
        (debugger +lsp)
        (direnv)
        (docker)
+       (editorconfig)
        (eval +overlay)
        (lookup)
-       (lsp +peek)
+       (lsp +peek +lsp-ui)
        (magit +forge)
        (pdf)
+       (rgb)
        ;;ansible
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        ;;gist              ; interacting with github gists
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
-       ;; (:if IS-MAC macos)  ; improve compatibility with macOS
-       ;;tty               ; improve the terminal Emacs experience
+       (:if IS-MAC macos)  ; improve compatibility with macOS
+       tty               ; improve the terminal Emacs experience
 
        :lang
+       (cc +lsp)
        (data)
        (elixir)
        (emacs-lisp)
+       (go +lsp)
        (haskell +lsp)
        (idris)
        (java +lsp)
@@ -122,10 +124,11 @@
        (org)
        (purescript +lsp)
        (python +lsp +pyright)
+       (rust)
        (sh)
+       (web)
        (yaml)
        ;;agda              ; types of types of types of types...
-       ;;cc                ; C/C++/Obj-C madness
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -140,7 +143,6 @@
        ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
-       ;;(go +lsp)         ; the hipster dialect
        ;;hy                ; readability of scheme w/ speed of python
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
@@ -156,14 +158,12 @@
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       ;;web               ; the tubes
 
        :email
        ;;(mu4e +gmail)
