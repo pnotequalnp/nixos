@@ -7,8 +7,10 @@
 
   config = lib.mkIf config.profiles.graphical.enable {
     programs.alacritty = import ./alacritty.nix;
-    programs.chromium = import ./chromium.nix // { package = pkgs.chromium-dark; };
-    programs.firefox = import ./firefox.nix;
+    programs.chromium = import ./chromium.nix // {
+      package = pkgs.chromium-dark;
+    };
+    programs.firefox = import ./firefox.nix pkgs.nur.repos.rycee.firefox-addons;
     programs.zathura = import ./zathura.nix;
 
     home.packages = with pkgs; [

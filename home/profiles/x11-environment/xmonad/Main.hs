@@ -108,12 +108,12 @@ dunstKeys =
 
 runKeys :: Map ([ButtonMask], KeySym) (X ())
 runKeys =
-  [ ([], X.xK_space)               ## spawn "rofi -show drun"
-  , ([X.shiftMask], X.xK_space)    ## spawn "rofi -show run"
-  , ([], X.xK_Return)              ## spawn "chromium"
-  , ([X.controlMask], X.xK_Return) ## spawn "chromium --incognito"
-  , ([], X.xK_d)                   ## spawn "Discord"
-  , ([], X.xK_e)                   ## spawn "emacsclient -c"
+  [ ([], X.xK_space) ## spawn "rofi -show drun",
+    ([X.shiftMask], X.xK_space) ## spawn "rofi -show run",
+    ([], X.xK_Return) ## spawn "firefox",
+    ([X.controlMask], X.xK_Return) ## spawn "firefox --private-window",
+    ([], X.xK_d) ## spawn "Discord",
+    ([], X.xK_e) ## spawn "emacsclient -c"
   ]
 
 systemKeys :: Map ([ButtonMask], KeySym) (X ())

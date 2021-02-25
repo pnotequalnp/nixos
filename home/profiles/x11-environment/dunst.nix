@@ -17,7 +17,7 @@
       transparency = 6;
 
       dmenu = "rofi -dmenu";
-      browser = "/usr/bin/env chromium";
+      browser = "/usr/bin/env firefox";
     };
     urgency_low = {
       msg_urgency = "low";

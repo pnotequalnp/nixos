@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nur.url = "github:nix-community/NUR";
 
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
@@ -22,30 +23,37 @@
     chrome-dark.url = "github:pnotequalnp/chrome-dark";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, nix-doom-emacs, chrome-dark }: {
-    homeConfigurations = {
-      tarvos = home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
-        homeDirectory = /home/kevin;
-        username = "kevin";
-        configuration = { pkgs, ... }: {
-          nixpkgs.overlays = [ chrome-dark.overlay ];
-          imports = [
-            nix-doom-emacs.hmModule
-            ./home/hosts/tarvos.nix
-          ];
+  outputs = { self, nixpkgs, nur, nixos-hardware, home-manager, nix-doom-emacs
+    , chrome-dark }: {
+      homeConfigurations = {
+        tarvos = home-manager.lib.homeManagerConfiguration {
+          system = "x86_64-linux";
+          homeDirectory = /home/kevin;
+          username = "kevin";
+          configuration = { pkgs, ... }: {
+            nixpkgs.overlays = [ chrome-dark.overlay nur.overlay ];
+            imports = [ nix-doom-emacs.hmModule ./home/hosts/tarvos.nix ];
+          };
+        };
+
+        minimal = home-manager.lib.homeManagerConfiguration {
+          system = "x86_64-linux";
+          homeDirectory = /home/kevin;
+          username = "kevin";
+          configuration = { pkgs, ... }: {
+            nixpkgs.overlays = [ chrome-dark.overlay nur.overlay ];
+            imports = [ nix-doom-emacs.hmModule ./home/hosts/minimal.nix ];
+          };
         };
       };
 
-      minimal = home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
-        homeDirectory = /home/kevin;
-        username = "kevin";
-        configuration = { pkgs, ... }: {
-          nixpkgs.overlays = [ chrome-dark.overlay ];
-          imports = [
-            nix-doom-emacs.hmModule
-            ./home/hosts/minimal.nix
+      nixosConfigurations = {
+        tarvos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nixos/hosts/tarvos
+            nixpkgs.nixosModules.notDetected
+            nixos-hardware.nixosModules.lenovo-thinkpad-t490
           ];
         };
       };
