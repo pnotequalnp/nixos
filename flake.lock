@@ -159,6 +159,21 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1610051610,
+        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -180,6 +195,29 @@
         "type": "github"
       }
     },
+    "neovim": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "contrib",
+        "lastModified": 1614209844,
+        "narHash": "sha256-GbSPxXwr+QL3yWQmnVZUAO6BBzHtMp2YbeKysPX+/Cg=",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "e55ded00cfb8432a7bc8af40b477aaf0cba70405",
+        "type": "github"
+      },
+      "original": {
+        "dir": "contrib",
+        "owner": "neovim",
+        "repo": "neovim",
+        "type": "github"
+      }
+    },
     "nix-doom-emacs": {
       "inputs": {
         "doom-emacs": "doom-emacs",
@@ -190,7 +228,7 @@
         "evil-org-mode": "evil-org-mode",
         "evil-quick-diff": "evil-quick-diff",
         "explain-pause-mode": "explain-pause-mode",
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "nix-straight": "nix-straight",
         "nixpkgs": [
           "nixpkgs"
@@ -380,6 +418,7 @@
       "inputs": {
         "chrome-dark": "chrome-dark",
         "home-manager": "home-manager",
+        "neovim": "neovim",
         "nix-doom-emacs": "nix-doom-emacs",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

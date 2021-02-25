@@ -20,32 +20,37 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    neovim = {
+      url = "github:neovim/neovim?dir=contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     chrome-dark.url = "github:pnotequalnp/chrome-dark";
   };
 
   outputs = { self, nixpkgs, nur, nixos-hardware, home-manager, nix-doom-emacs
-    , chrome-dark }: {
-      homeConfigurations = {
-        tarvos = home-manager.lib.homeManagerConfiguration {
+    , neovim, chrome-dark }:
+    let
+      lib = nixpkgs.lib;
+      overlays = [ chrome-dark.overlay nur.overlay neovim.overlay ];
+      homeConfig = host: {
+        name = host;
+        value = home-manager.lib.homeManagerConfiguration {
           system = "x86_64-linux";
           homeDirectory = /home/kevin;
           username = "kevin";
           configuration = { pkgs, ... }: {
-            nixpkgs.overlays = [ chrome-dark.overlay nur.overlay ];
-            imports = [ nix-doom-emacs.hmModule ./home/hosts/tarvos.nix ];
-          };
-        };
-
-        minimal = home-manager.lib.homeManagerConfiguration {
-          system = "x86_64-linux";
-          homeDirectory = /home/kevin;
-          username = "kevin";
-          configuration = { pkgs, ... }: {
-            nixpkgs.overlays = [ chrome-dark.overlay nur.overlay ];
-            imports = [ nix-doom-emacs.hmModule ./home/hosts/minimal.nix ];
+            nixpkgs.overlays = overlays;
+            imports = [
+              (./home/hosts + ("/" + host + ".nix"))
+              nix-doom-emacs.hmModule
+            ];
           };
         };
       };
+    in {
+      homeConfigurations =
+        lib.listToAttrs (builtins.map homeConfig [ "tarvos" "minimal" ]);
 
       nixosConfigurations = {
         tarvos = nixpkgs.lib.nixosSystem {

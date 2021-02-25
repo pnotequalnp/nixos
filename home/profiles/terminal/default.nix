@@ -12,7 +12,7 @@
 
     programs.git = import ./git.nix;
     programs.htop = import ./htop.nix;
-    # programs.neovim = import ./neovim { inherit lib pkgs; };
+    programs.neovim = import ./neovim { inherit lib pkgs; };
     programs.tmux = import ./tmux.nix { inherit lib pkgs; };
 
     programs.direnv = {
@@ -35,7 +35,7 @@
       gitAndTools.git-ignore
       jq
       kakoune
-      # manix
+      manix
       nix-index
       nix-tree
       nixfmt
