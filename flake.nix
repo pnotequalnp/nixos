@@ -55,6 +55,7 @@
             nixpkgs.nixosModules.notDetected
             nixos-hardware.nixosModules.lenovo-thinkpad-t490
           ];
+          extraArgs = { inherit nixpkgs; };
         };
       };
     };

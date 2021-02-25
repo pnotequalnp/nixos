@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, nixpkgs, pkgs, ... }:
 
 {
   imports = [ ./networking.nix ];
@@ -10,13 +10,7 @@
     efi.canTouchEfiVariables = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    acpi
-    curl
-    git
-    tmux
-    vim
-  ];
+  environment.systemPackages = with pkgs; [ acpi curl git tmux vim ];
 
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -32,6 +26,7 @@
       keep-derivations = true
       experimental-features = nix-command flakes ca-references
     '';
+    registry.nixpkgs.flake = nixpkgs;
   };
 
   nixpkgs.config.allowUnfree = true;
