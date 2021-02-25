@@ -44,10 +44,12 @@
       ripgrep
       udiskie
       unzip
-      vim
       zip
     ];
 
-    home.sessionVariables = { EDITOR = "vim"; };
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      MANPAGER = "nvim +Man!";
+    };
   };
 }

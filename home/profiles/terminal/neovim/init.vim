@@ -24,11 +24,11 @@ set updatetime=300
 
 set nowrap linebreak
 
-set list listchars=tab:>=>,space:·,trail:×,extends:⋯,precedes:⋯,nbsp:␣
+set list listchars=tab:>=>,trail:×,extends:⋯,precedes:⋯,nbsp:␣
 set fillchars=fold:\ 
 set showbreak=↪
 
-set colorcolumn=80,100,120
+set colorcolumn=100
 
 set scrolloff=1
 set sidescrolloff=1
